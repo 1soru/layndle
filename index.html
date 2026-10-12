@@ -214,15 +214,51 @@
     <p><b>N</b> is in the word but in the wrong spot.</p>
     <div class="ex"><div class="tile">C</div><div class="tile">R</div><div class="tile">U</div><div class="tile absent">S</div><div class="tile">H</div></div>
     <p><b>S</b> is not in the word in any spot.</p>
-    <p>A new Layndle every day. It is definitely not the same word every day.</p>
+    <p><b>The twist:</b> about half the days, the answer is <b>LAYNE</b>. The other days, it's a regular 5-letter word. Your first guess is a gamble.</p>
+    <p>A new Layndle comes out every day at midnight.</p>
   </div>
 </div>
 
 <script>
-const ANSWER = "LAYNE";
 const START = new Date(2026, 9, 11); // puzzle #1 = Oct 11, 2026
 const today = new Date(); today.setHours(0,0,0,0);
 const dayNum = Math.round((today - START) / 86400000) + 1;
+// One answer per day for a year, starting Oct 11, 2026 (about half are LAYNE).
+// After 365 days it loops back to the start.
+const WORDS = [
+  "LAYNE","ACTOR","MOUSE","PILOT","LAYNE","ANGLE","CLOUD","LAYNE","LAYNE","LAYNE","QUEST","LAYNE",
+  "LAYNE","LAYNE","LAYNE","ELBOW","ARENA","DAISY","LAYNE","LAYNE","LAYNE","LAYNE","SPARK","ROYAL",
+  "LAYNE","BRIDE","LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","ROUND","HOTEL","TIGER","DELTA","GUARD",
+  "LAYNE","GUIDE","COCOA","LAYNE","CLASS","WATCH","BAKER","LAYNE","LAYNE","CHART","SKATE","WHALE",
+  "LAYNE","SHARK","SNACK","LAYNE","LAYNE","GLOBE","DOUGH","LAYNE","LAYNE","POINT","AGENT","LAYNE",
+  "MOOSE","LAYNE","LAYNE","FLASH","LAYNE","LAYNE","LATCH","LAYNE","EMBER","COACH","LAYNE","MUSIC",
+  "CRASH","LAYNE","WHEAT","DANCE","LAYNE","LAYNE","QUIET","CORAL","CLIMB","CURVE","VOICE","DRIFT",
+  "LAYNE","AMBER","LAYNE","LAYNE","LAYNE","LAYNE","EQUAL","LAYNE","LAYNE","RAVEN","LAYNE","MIGHT",
+  "FROST","YEAST","VIDEO","LAYNE","CHORD","LAYNE","HAPPY","CLOCK","NIGHT","LAYNE","LAYNE","LAYNE",
+  "LAYNE","LAYNE","TRAIL","LAYNE","LAYNE","DREAM","LAYNE","CHAMP","LAYNE","TREAT","LAYNE","BRAIN",
+  "GLOVE","LAYNE","LAYNE","DODGE","BISON","LLAMA","FLOCK","BLAZE","VIVID","IGLOO","PLAZA","FENCE",
+  "ACORN","LAYNE","ALLEY","CIDER","LAYNE","LAYNE","TRAIN","LAYNE","LAYNE","LAYNE","LAYNE","LAYNE",
+  "LAYNE","LAYNE","CHILL","PRISM","LAYNE","LAYNE","MAGIC","FOCUS","TORCH","SPOON","BADGE","SNAKE",
+  "CANOE","LAYNE","LAYNE","DINER","SCARF","LAYNE","LAYNE","SHELL","LAYNE","LOGIC","LAYNE","LAYNE",
+  "BEACH","LAYNE","LAYNE","BUNCH","GRASS","DRIVE","LEVEL","YOUTH","PAINT","LAYNE","LAYNE","COAST",
+  "PEACH","ONION","MELON","STOVE","LAYNE","BROOK","LAYNE","LAYNE","PEDAL","LAYNE","LAYNE","LAYNE",
+  "QUACK","OCEAN","LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","SWEET","BOARD","LAYNE","NOBLE",
+  "BONUS","STAMP","PENNY","LUNAR","LAYNE","LAYNE","IVORY","YACHT","ANGEL","LAYNE","LAYNE","VAPOR",
+  "LAYNE","LAYNE","KNIFE","LAYNE","BERRY","LAYNE","CREEK","ALERT","LAYNE","MAPLE","LAYNE","SPICE",
+  "LAYNE","OLIVE","LAYNE","LAYNE","BRICK","LAYNE","CHALK","LAYNE","CARGO","FABLE","SPORT","LAYNE",
+  "LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","CHARM","TULIP","LAYNE","LAYNE","FAIRY","NERVE","LAYNE",
+  "LAYNE","LAYNE","LAYNE","SAUCE","LAYNE","LAYNE","LAYNE","HOUSE","CRAFT","SUGAR","BLUFF","LAYNE",
+  "DENIM","LAYNE","DRAFT","LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","HEART","LAYNE","MERCY",
+  "GIANT","LAYNE","LAYNE","LAYNE","LAYNE","NORTH","LAYNE","JUICE","LAYNE","HONEY","LASER","LAYNE",
+  "GREET","LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","KOALA","CLEAN","LAYNE","LAYNE",
+  "LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","ROCKY","GRAPE","LAYNE","JEWEL","LAYNE","LAYNE","WHEEL",
+  "JELLY","LEMON","ALARM","FLUTE","LAYNE","QUILT","LAYNE","FLOAT","CHESS","LAYNE","LAYNE","LAYNE",
+  "STORM","FORGE","SUNNY","CHAIR","MEDAL","BLEND","LAYNE","FIELD","MARCH","LAYNE","CROWN","LAYNE",
+  "LAYNE","LAYNE","ORBIT","TOWER","LAYNE","LAYNE","ROBOT","PANDA","CABIN","LAYNE","LAYNE","CLOWN",
+  "LAYNE","LAYNE","LAYNE","PIZZA","LAYNE","ZEBRA","LAYNE","SCOUT","LAYNE","GRAVY","CRANE","LAYNE",
+  "LAYNE","FEAST","LAYNE","LAYNE","SOLAR"
+];
+const ANSWER = WORDS[((dayNum - 1) % WORDS.length + WORDS.length) % WORDS.length];
 const dateKey = "layndle-day-" + dayNum;
 
 let guesses = [], cur = "", over = false, busy = false, won = false;
@@ -341,7 +377,7 @@ function checkEnd(fresh){
       set("layndle-stats", stats);
       const tiles=grid.children[guesses.length-1].children;
       [...tiles].forEach((t,i)=>setTimeout(()=>t.classList.add("bounce"),i*100));
-      toast(["Genius","Magnificent","Impressive","Splendid","Great","Phew"][guesses.length-1]);
+      toast(ANSWER==="LAYNE" && guesses.length===1 ? "You knew it was Layne" : ["Genius","Magnificent","Impressive","Splendid","Great","Phew"][guesses.length-1]);
       setTimeout(openStats, 1800);
     }
   } else if(guesses.length===6){
