@@ -1,0 +1,19 @@
+name: Daily Layndle
+on:
+  schedule:
+    - cron: "5 15 * * *"   # about 8am Pacific
+  workflow_dispatch:        # lets you run it by hand
+
+jobs:
+  announce:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post to Discord
+        env:
+          WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          TODAY=$(TZ=America/Los_Angeles date +%Y-%m-%d)
+          N=$(( ( $(date -d "$TODAY" +%s) - $(date -d 2026-10-11 +%s) ) / 86400 + 1 ))
+          MSG="🟩🟨⬜ **Layndle #$N** is out! Is it Layne today?\nhttps://1soru.github.io/layndle/"
+          curl -sS -H "Content-Type: application/json" \
+            -d "{\"content\": \"$MSG\"}" "$WEBHOOK"
