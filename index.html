@@ -223,42 +223,49 @@
 const START = new Date(2026, 9, 11); // puzzle #1 = Oct 11, 2026
 const today = new Date(); today.setHours(0,0,0,0);
 const dayNum = Math.round((today - START) / 86400000) + 1;
-// One answer per day for a year, starting Oct 11, 2026 (about half are LAYNE).
+// One scrambled answer per day for a year, starting Oct 11, 2026.
 // After 365 days it loops back to the start.
-const WORDS = [
-  "LAYNE","ACTOR","MOUSE","PILOT","LAYNE","ANGLE","CLOUD","LAYNE","LAYNE","LAYNE","QUEST","LAYNE",
-  "LAYNE","LAYNE","LAYNE","ELBOW","ARENA","DAISY","LAYNE","LAYNE","LAYNE","LAYNE","SPARK","ROYAL",
-  "LAYNE","BRIDE","LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","ROUND","HOTEL","TIGER","DELTA","GUARD",
-  "LAYNE","GUIDE","COCOA","LAYNE","CLASS","WATCH","BAKER","LAYNE","LAYNE","CHART","SKATE","WHALE",
-  "LAYNE","SHARK","SNACK","LAYNE","LAYNE","GLOBE","DOUGH","LAYNE","LAYNE","POINT","AGENT","LAYNE",
-  "MOOSE","LAYNE","LAYNE","FLASH","LAYNE","LAYNE","LATCH","LAYNE","EMBER","COACH","LAYNE","MUSIC",
-  "CRASH","LAYNE","WHEAT","DANCE","LAYNE","LAYNE","QUIET","CORAL","CLIMB","CURVE","VOICE","DRIFT",
-  "LAYNE","AMBER","LAYNE","LAYNE","LAYNE","LAYNE","EQUAL","LAYNE","LAYNE","RAVEN","LAYNE","MIGHT",
-  "FROST","YEAST","VIDEO","LAYNE","CHORD","LAYNE","HAPPY","CLOCK","NIGHT","LAYNE","LAYNE","LAYNE",
-  "LAYNE","LAYNE","TRAIL","LAYNE","LAYNE","DREAM","LAYNE","CHAMP","LAYNE","TREAT","LAYNE","BRAIN",
-  "GLOVE","LAYNE","LAYNE","DODGE","BISON","LLAMA","FLOCK","BLAZE","VIVID","IGLOO","PLAZA","FENCE",
-  "ACORN","LAYNE","ALLEY","CIDER","LAYNE","LAYNE","TRAIN","LAYNE","LAYNE","LAYNE","LAYNE","LAYNE",
-  "LAYNE","LAYNE","CHILL","PRISM","LAYNE","LAYNE","MAGIC","FOCUS","TORCH","SPOON","BADGE","SNAKE",
-  "CANOE","LAYNE","LAYNE","DINER","SCARF","LAYNE","LAYNE","SHELL","LAYNE","LOGIC","LAYNE","LAYNE",
-  "BEACH","LAYNE","LAYNE","BUNCH","GRASS","DRIVE","LEVEL","YOUTH","PAINT","LAYNE","LAYNE","COAST",
-  "PEACH","ONION","MELON","STOVE","LAYNE","BROOK","LAYNE","LAYNE","PEDAL","LAYNE","LAYNE","LAYNE",
-  "QUACK","OCEAN","LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","SWEET","BOARD","LAYNE","NOBLE",
-  "BONUS","STAMP","PENNY","LUNAR","LAYNE","LAYNE","IVORY","YACHT","ANGEL","LAYNE","LAYNE","VAPOR",
-  "LAYNE","LAYNE","KNIFE","LAYNE","BERRY","LAYNE","CREEK","ALERT","LAYNE","MAPLE","LAYNE","SPICE",
-  "LAYNE","OLIVE","LAYNE","LAYNE","BRICK","LAYNE","CHALK","LAYNE","CARGO","FABLE","SPORT","LAYNE",
-  "LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","CHARM","TULIP","LAYNE","LAYNE","FAIRY","NERVE","LAYNE",
-  "LAYNE","LAYNE","LAYNE","SAUCE","LAYNE","LAYNE","LAYNE","HOUSE","CRAFT","SUGAR","BLUFF","LAYNE",
-  "DENIM","LAYNE","DRAFT","LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","HEART","LAYNE","MERCY",
-  "GIANT","LAYNE","LAYNE","LAYNE","LAYNE","NORTH","LAYNE","JUICE","LAYNE","HONEY","LASER","LAYNE",
-  "GREET","LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","KOALA","CLEAN","LAYNE","LAYNE",
-  "LAYNE","LAYNE","LAYNE","LAYNE","LAYNE","ROCKY","GRAPE","LAYNE","JEWEL","LAYNE","LAYNE","WHEEL",
-  "JELLY","LEMON","ALARM","FLUTE","LAYNE","QUILT","LAYNE","FLOAT","CHESS","LAYNE","LAYNE","LAYNE",
-  "STORM","FORGE","SUNNY","CHAIR","MEDAL","BLEND","LAYNE","FIELD","MARCH","LAYNE","CROWN","LAYNE",
-  "LAYNE","LAYNE","ORBIT","TOWER","LAYNE","LAYNE","ROBOT","PANDA","CABIN","LAYNE","LAYNE","CLOWN",
-  "LAYNE","LAYNE","LAYNE","PIZZA","LAYNE","ZEBRA","LAYNE","SCOUT","LAYNE","GRAVY","CRANE","LAYNE",
-  "LAYNE","FEAST","LAYNE","LAYNE","SOLAR"
+const DATA = [
+  "d+FcJIo=","I4R43qQ=","wL0C72Q=","7GjKpAQ=","oxXgUMY=","Z8W3Gf8=","IopkxbE=","7EQzgXE=","rgj1XTM=","Z8+sFvo=",
+  "JY579lw=","iWnWvBw=","Wjy5Ce8=","I5Ng0kY=","hG7Ltxk=","bMCxGeo=","yKAS9lw=","tBT3cN0=","E4F8wLY=","gnLNtyc=",
+  "cedSIpQ=","+FjbqQ0=","YMS4MIw=","4FghnAo=","fNqnL4E=","+07Orgg=","CuhVOZ8=","m3vETi4=","KI5r270=","sSGSYNQ=",
+  "1rw5hWs=","adFUKos=","lwv1Syc=","0qoP8EA=","bdO/DIQ=","nxDjXTA=","x7EE9GI=","BfpdNZs=","Ri2Me9A=","iGDXpRU=",
+  "xaEJ5EE=","GOtFP5M=","Uj6RBP4=","rQ3yWDg=","/ljdrQs=","yL4c6nM=","P4B3yb0=","GuBWPpw=","YdeqEvw=","RzmbFes=",
+  "qCqAadw=","phbpU8M=","lQP2RjA=","l3HpQSk=","k3/IQSs=","mnLFtyc=","mH7DSyU=","jXfqQD0=","owrtXSo=","vx/gaso=",
+  "TSSZYtk=","VcW2BPA=","cthdIY8=","GfZk06M=","P6kU7EI=","5k49l3s=","iXvLtyE=","uCiXbd0=","YtGzE5k=","LYx53ro=",
+  "5U86lng=","pRjxTj8=","adOlCPY=","L4dk3rI=","61szrBQ=","SSGJedQ=","EvRxwac=","61somg4=","UTKTdMA=","Iotp37k=",
+  "gnbWvRc=","e8ikPYk=","wUckhX4=","QimVd/4=","Oa8a6lw=","vRyIatI=","N51o5Eo=","th7pW8s=","NJJv50k=","vRWWbMA=",
+  "y7AR/l4=","UzOMBuY=","4EYjk3U=","Z+lVI5c=","nnTxTSM=","Pp8O5FM=","Ud6mFfc=","l27Brg4=","N5d/1UI=","XMyzCfk=",
+  "gHDaoCs=","xqYF91M=","BetXLIA=","TyWJYNM=","gGzHtw4=","y6MA+lY=","FPZLx6E=","ZcW6EPA=","thCVZcM=","j3/Mvio=",
+  "8FE/nHw=","yaEG9FQ=","KZ9i2rQ=","GOtXzqU=","f+1QLJo=","Yde5GJ4=","Xcu+Dvg=","TCerCvA=","UzmMAO4=","XCmVeOQ=",
+  "WzudG+0=","WTGyCOQ=","ZsS5FfM=","f9m1K4I=","CupNNpo=","HYBmz7w=","MJ0D5Ek=","1b4skmY=","/XnDsxs=","uxDwTik=",
+  "TS6GdvA=","avRYOIU=","Podm3F0=","+lo5i28=","sBr3RTw=","c9y+GvY=","PphlzaM=","9188hmo=","sBnvfNY=","GflGLIw=",
+  "yqwpmX8=","swPwQtY=","FP5bJ4k=","9V06iGg=","VSOeZsg=","LIR3/VE=","jBj8Ui8=","DvFNOr8=","4XfCsgQ=","aMhLOZ0=",
+  "7kUuuxQ=","ZMirGIU=","9EQ8shw=","etxYNZM=","lHjYoA8=","FORM274=","tx7sSi0=","IbEC8EQ=","RiypFfs=","70ffsQ0=",
+  "HJdwzL0=","WjKBa8c=","9Uc6hhA=","G51306g=","VyGUZPI=","nnDDqA0=","2bMG6kQ=","GPBHNYU=","VDiZZMo=","k3vYog4=",
+  "zK4Tn3k=","M4l1xaU=","ZdtVII0=","XzSEfvI=","sB7wSCQ=","hHfStgE=","7Ucqgn0=","yKATmXU=","J7UI9EI=","OYhh3kI=",
+  "GZd+260=","D+N/3LI=","CuVB2b0=","FfdDP7c=","CO5T27U=","D/p80bI=","Ppxhzas=","L49w+lo=","wL4C4EA=","xVUmlGA=",
+  "4kjNsR8=","g2vsXj4=","si2ccdw=","ddyxCOA=","GetWKrw=","KLgH/U0=","+004iB4=","shLxQyc=","dd+qBug=","NJxr2ak=",
+  "6UYxjno=","sRnsUiM=","YMK/M5U=","078V5kQ=","jGr2SiE=","ZN6gCYs=","wLIE710=","vQHlTzc=","HetWLoA=","5Ew/tRk=",
+  "Ts6yBPI=","z6oP6W4=","pDCUccU=","IIAD8VU=","pw34dNo=","PI5wykw=","pAL/d9k=","LYUG/FA=","VT+dacc=","w6MclnY=",
+  "ftK4H/k=","6XnKuAw=","Afd91r0=","ogqcbsM=","y10gmHY=","E/pAIY8=","vQ/yTtg=","000zlGk=","H+lcLLo=","VTuFf8M=",
+  "kXvOogw=","0LgP/U0=","HOdZLIE=","WzOQasY=","i2/DVT8=","9VUqgGA=","KYAO/Fk=","Fe9HLLo=","Z8OhF/Q=","WTGWZMQ=",
+  "uQ/ySiQ=","gGjbUT0=","733AvAo=","/k4xixs=","zVsunmg=","y60/iXk=","270Jl2s=","wqod738=","wKYbk30=","w6EyhGg=",
+  "9FAinWM=","50c4shI=","lHLXpwE=","jR3uXCg=","qgCFedc=","VCOoG/Y=","V8F8BKo=","DqZV/5M=","4ZMu0kQ=","1E7zmDU=",
+  "jCbYePc=","Vf6XNMg=","A6pe9pM=","zGQToVE=","hizCehs=","R++MNto=","EKlfw3w=","qUn2nDw=","ehyZKc8=","A7NA8mY=",
+  "pE7rlzk=","Re2KONg=","5ZMu1ng=","mDDfUfA=","M6Fc4JY=","o1bmmhs=","Ws9qAqU=","2Hj7iS0=","X/WADKI=","3nYBsyM=",
+  "XPqHD6E=","13P1niU=","Ksh1Gb8=","vU/0Yw4=","CK5L+50=","lQ+lS+g=","9pwTrlw=","V/94Cqo=","uDbEax8=","6oIx23c=",
+  "RfeKNqA=","tCTbYRE=","55Ek1EI=","Ls5tH7s=","aQO2WvQ=","qED3hTU=","7YIp23M=","LMZ0HbU=","fB6jL8k=","jS3SeBg=",
+  "3nj9jSs=","55ck1kI=","AKpP850=","IcluHLw=","QfeKMtw=","Zh65LNk=","nBagWvI=","hjbJc+M=","syfYbRk=","vFzfbQk=",
+  "u1HkaAY=","oVv5nA4=","vlr2aRk=","sV3OYQc=","gyHJYRM=","lTLMUOo=","bAqvX/k=","aPGGJsE=","Uvh9Aa8=","OdZK4Z8=",
+  "EIAo0XQ=","xm4dt1s=","qVvmmgw=","mAi3Tf0=","VOieJKY=","CKxK+pc=","2nsNtkQ=","iyXDbg4=","R+SAOtI=","AapY/pM=",
+  "0HIPgyU=","awmiVvU=","M9Ra7Io=","y3sIui4=","YxW1Rvo=","DaVC8JA=","rVvmnjA=","VPyPBak=","+HoPr08=","chSrVNg=",
+  "GY86ynw=","kDCzQeU=","CbNTxXs=","ij7ece8=","G7JUwGI=","nTW2TOA=","4oA90Xc=","fB66P80=","wGYDs1U=","Wcl6CLw=",
+  "vlTRbQM=","A78z1mY=","e+2QKMY=","tE7ijzs=","Db9C/mg=","Y+6FMsg=","r1nsnAo=","7ZU9z28=","LthmErw=","YAi/Tf0=",
+  "okT5kT8=","4Yc4x2c=","NNZr54E=","ReWaMNA=","iT6gSvQ="
 ];
-const ANSWER = WORDS[((dayNum - 1) % WORDS.length + WORDS.length) % WORDS.length];
+function decode(i){ const b=atob(DATA[i]); let w=""; for(let j=0;j<b.length;j++) w+=String.fromCharCode(b.charCodeAt(j) ^ (((i*i*2 + i*37 + j*101 + 59) ^ (i>>3)) & 255)); return w; }
+const ANSWER = decode(((dayNum - 1) % DATA.length + DATA.length) % DATA.length);
 const dateKey = "layndle-day-" + dayNum;
 
 let guesses = [], cur = "", over = false, busy = false, won = false;
